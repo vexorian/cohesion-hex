@@ -1,0 +1,1145 @@
+title Cohesion Hex 0.41
+(Note always before sharing set SOUND_VOL to 0.05 in the HTML)
+( Requires Pancelor's fork : https://pancelor.com/PuzzleScript/editor.html)
+author vexorian
+homepage vexorian.com
+
+
+background_color #000000
+text_color       #6C6862
+
+(debug)
+(verbose_logging)
+
+again_interval 0.01
+(again_interval 1.00)
+run_rules_on_level_start
+realtime_interval 0.05
+enable_level_select
+
+
+(key_repeat_interval 0.15)
+norepeat_action
+(
+zlib License
+
+Copyright (c) 2021, Victor Hugo Soliz Kuncar
+
+This software is provided 'as-is', without any express or implied
+warranty. In no event will the authors be held liable for any damages
+arising from the use of this software.
+
+Permission is granted to anyone to use this software for any purpose,
+including commercial applications, and to alter it and redistribute it
+freely, subject to the following restrictions:
+
+1. The origin of this software must not be misrepresented; you must not
+   claim that you wrote the original software. If you use this software
+   in a product, an acknowledgment in the product documentation would be
+   appreciated but is not required.
+2. Altered source versions must be plainly marked as such, and must not be
+   misrepresented as being the original software.
+3. This notice may not be removed or altered from any source distribution.
+
+)
+
+
+( Some comments here
+
+
+1. I really wanted to make logic for when you push a portal against a block, it would teleport the block through the other portal. But this
+has proven really difficult for puzzle script, so for now pushing portals towards other objects won't allow them to push
+
+
+)
+
+
+========
+OBJECTS
+========
+
+Background
+#1F1F1F #202020 #212121 #222222 #1E1E1E
+13304
+20234
+02024
+21034
+44444
+
+BlueTarget
+blue
+0.0.0
+.....
+0...0
+.....
+0.0.0
+
+OrangeTarget
+orange
+0.0.0
+.....
+0...0
+.....
+0.0.0
+
+
+
+Wall
+#4A4846 #3E3E3E #56534E #635D56 
+01012
+10201
+12201
+01122
+20012
+
+WallTop
+#4D4D4D #5C5A58 #6C6862 #7C756C
+01012
+.....
+.....
+.....
+.....
+
+WallLeft
+#4D4D4D #5C5A58 #6C6862 #7C756C
+0....
+1....
+1....
+0....
+2....
+
+WallRight
+#262626 #2D2D2B #2D2D2B #3D3A35
+....2
+....1
+....1
+....2
+....2
+
+WallBottom
+#262626 #2D2D2B #2D2D2B #3D3A35
+.....
+.....
+.....
+.....
+20012
+
+
+PlayerNeutral
+transparent
+
+PlayerLeft
+transparent
+
+PlayerRight
+transparent
+
+PlayerSpriteNeutral
+black green #F2CBA4
+.111.
+.121.
+10101
+.111.
+.0.0.
+
+
+PlayerSpriteLeft
+black green #F2CBA4
+.111.
+.211.
+1010.
+.111.
+.0.0.
+
+PlayerSpriteRight
+black green #F2CBA4
+.111.
+.112.
+.0101
+.111.
+.0.0.
+
+
+BlueBlock
+black #0000ff #2E2EFF
+22222
+21110
+21110
+21110
+00000
+
+BlueChainR___
+#4747FF #000080
+.....
+.....
+..011
+.....
+.....
+
+BlueChain_L__
+#4747FF #000080
+.....
+.....
+110..
+.....
+.....
+
+BlueChain__U_
+#4747FF #000080
+..1..
+..1..
+..0..
+.....
+.....
+
+BlueChain___D
+#4747FF #000080
+.....
+.....
+..0..
+..1..
+..1..
+
+
+
+BlueChainRL__
+#4747FF #000080
+.....
+.....
+11011
+.....
+.....
+
+BlueChainR_U_
+#4747FF #000080
+..1..
+..1..
+..011
+.....
+.....
+
+BlueChainR__D
+#4747FF #000080
+.....
+.....
+..011
+..1..
+..1..
+
+
+BlueChain_LU_
+#4747FF #000080
+..1..
+..1..
+110..
+.....
+.....
+
+BlueChain_L_D
+#4747FF #000080
+.....
+.....
+110..
+..1..
+..1..
+
+BlueChain__UD
+#4747FF #000080
+..1..
+..1..
+..0..
+..1..
+..1..
+
+BlueDoorClosed
+#2020FF #8080FF #0000c0
+.1.1.
+10002
+.0.0.
+10002
+.2.2.
+
+BlueDoorOpen
+#2020FF #4747FF #0000c0
+.....
+.00..
+.01..
+.....
+.....
+
+BlueDoor
+transparent
+
+BlueTrap
+transparent
+
+BlueDoorEditorSprite
+#0000FF
+.000.
+.0..0
+.0..0
+.0..0
+.000.
+
+BlueTrapEditorSprite
+#0000FF
+00000
+..0..
+..0..
+..0..
+..0..
+
+BlueNone
+transparent
+
+BlueAll
+transparent
+
+BlueNotAll
+transparent
+
+
+
+
+
+OrangeBlock
+#1F1B07 #F29432 #F2CBA4
+22222
+21110
+21110
+21110
+00000
+
+OrangeChainR___
+#F2C832 #8F761E
+.....
+.....
+..011
+.....
+.....
+
+OrangeChain_L__
+#F2C832 #8F761E
+.....
+.....
+110..
+.....
+.....
+
+OrangeChain__U_
+#F2C832 #8F761E
+..1..
+..1..
+..0..
+.....
+.....
+
+OrangeChain___D
+#F2C832 #8F761E
+.....
+.....
+..0..
+..1..
+..1..
+
+
+
+OrangeChainRL__
+#F2C832 #8F761E
+.....
+.....
+11011
+.....
+.....
+
+OrangeChainR_U_
+#F2C832 #8F761E
+..1..
+..1..
+..011
+.....
+.....
+
+OrangeChainR__D
+#F2C832 #8F761E
+.....
+.....
+..011
+..1..
+..1..
+
+
+OrangeChain_LU_
+#F2C832 #8F761E
+..1..
+..1..
+110..
+.....
+.....
+
+OrangeChain_L_D
+#F2C832 #8F761E
+.....
+.....
+110..
+..1..
+..1..
+
+OrangeChain__UD
+#F2C832 #8F761E
+..1..
+..1..
+..0..
+..1..
+..1..
+
+OrangeDoorClosed
+#FF9F20 #FFB553 #DB5600
+.1.1.
+10002
+.0.0.
+10002
+.2.2.
+
+OrangeDoorOpen
+#FF9F20 #FFB553
+.....
+.00..
+.01..
+.....
+.....
+
+OrangeDoor
+transparent
+
+OrangeTrap
+transparent
+
+OrangeDoorEditorSprite
+#FF9F20
+.000.
+.0..0
+.0..0
+.0..0
+.000.
+
+OrangeTrapEditorSprite
+#FF9F20
+00000
+..0..
+..0..
+..0..
+..0..
+
+OrangeNone
+transparent
+
+OrangeAll
+transparent
+
+OrangeNotAll
+transparent
+
+
+
+
+BlueDebt
+transparent
+.....
+..0..
+.000.
+..0..
+.....
+
+BlueSecondDebt
+blue
+.....
+.0.0.
+.....
+.0.0.
+.....
+
+BlueNoDebt
+red
+00000
+0...0
+0...0
+0...0
+00000
+
+
+BlueDeletedOne
+orange
+.....
+.000.
+.0.0.
+.000.
+.....
+
+
+OrangeDebt
+transparent
+.....
+..0..
+.000.
+..0..
+.....
+
+OrangeSecondDebt
+blue
+.....
+.0.0.
+.....
+.0.0.
+.....
+
+OrangeNoDebt
+red
+00000
+0...0
+0...0
+0...0
+00000
+
+
+OrangeDeletedOne
+orange
+.....
+.000.
+.0.0.
+.000.
+.....
+
+
+Exit
+#321C12 #995636 #E8D90E #B66740
+.000.
+01310
+01320
+01310
+00000
+
+DoneExit
+#321C12 #000000 #B66740
+.000.
+01120
+01120
+01120
+01120
+
+AutoExit
+transparent
+
+=======
+LEGEND
+=======
+
+. = Background
+# = Wall
+P = PlayerNeutral and PlayerSpriteNeutral
+
+o = BlueBlock
+@ = BlueTarget
+
+q = OrangeBlock
+$ = OrangeTarget
+
+
+
+L = BlueBlock and BlueChain_L__
+R = BlueBlock and BlueChainR___
+U = BlueBlock and BlueChain__U_
+D = BlueBlock and BlueChain___D
+H =               BlueChainRL__
+V =               BlueChain__UD
+
+
+4 = OrangeBlock and OrangeChain_L__
+6 = OrangeBlock and OrangeChainR___
+8 = OrangeBlock and OrangeChain__U_
+2 = OrangeBlock and OrangeChain___D
+| =                 OrangeChain__UD
+- =                 OrangeChainRL__
+
+K = BlueDoor and BlueDoorEditorSprite
+J = BlueTrap and BlueTrapEditorSprite
+A = OrangeDoor and OrangeDoorEditorSprite
+B = OrangeTrap and OrangeTrapEditorSprite
+
+E = Wall and Exit
+W = Wall and BlueChainRL__
+
+X = AutoExit and Background
+
+Player = PlayerLeft or PlayerRight or PlayerNeutral
+PlayerSprite = PlayerSpriteLeft or PlayerSpriteRight or PlayerSpriteNeutral
+
+BlueChainExtreme = BlueChainR___ or BlueChain_L__ or BlueChain__U_  or BlueChain___D 
+
+BlueChainWithR = BlueChainR___ or BlueChainRL__ or BlueChainR_U_  or BlueChainR__D 
+BlueChainWithL = BlueChainRL__ or BlueChain_L__ or BlueChain_LU_  or BlueChain_L_D 
+BlueChainWithU = BlueChainR_U_ or BlueChain_LU_ or BlueChain__U_  or BlueChain__UD
+BlueChainWithD = BlueChainR__D or BlueChain_L_D or BlueChain__UD  or BlueChain___D
+
+BlueChainWithH = BlueChainWithR or BlueChainWithL
+BlueChainWithV = BlueChainWithU or BlueChainWithD
+
+BlueChain = BlueChainWithH or BlueChainWithV
+
+OrangeChainExtreme = OrangeChainR___ or OrangeChain_L__ or OrangeChain__U_  or OrangeChain___D 
+
+OrangeChainWithR = OrangeChainR___ or OrangeChainRL__ or OrangeChainR_U_  or OrangeChainR__D 
+OrangeChainWithL = OrangeChainRL__ or OrangeChain_L__ or OrangeChain_LU_  or OrangeChain_L_D 
+OrangeChainWithU = OrangeChainR_U_ or OrangeChain_LU_ or OrangeChain__U_  or OrangeChain__UD
+OrangeChainWithD = OrangeChainR__D or OrangeChain_L_D or OrangeChain__UD  or OrangeChain___D
+
+OrangeChainWithH = OrangeChainWithR or OrangeChainWithL
+OrangeChainWithV = OrangeChainWithU or OrangeChainWithD
+
+OrangeChain = OrangeChainWithH or OrangeChainWithV
+
+
+ClosedDoor = BlueDoorClosed or OrangeDoorClosed
+
+Block = BlueBlock or OrangeBlock
+Blocker = Block or Player or Wall or ClosedDoor
+
+BlueDebtOrNot = BlueDebt or BlueNoDebt
+OrangeDebtOrNot = OrangeDebt or OrangeNoDebt
+
+DeletedOne = BlueDeletedOne or OrangeDeletedOne
+
+EditorSprite = BlueDoorEditorSprite or BlueTrapEditorSprite or OrangeDoorEditorSprite or OrangeTrapEditorSprite
+BlueTrapOrDoor = BlueTrap or BlueDoor
+OrangeTrapOrDoor =  OrangeTrap or OrangeDoor
+
+=======
+SOUNDS
+=======
+
+SFX1 43792707 (push)
+SFX2 57039908 (delete)
+SFX3 65197704 (close)
+SFX4 83104507 (open)
+SFX5 764900   (exit)
+
+================
+COLLISIONLAYERS
+================
+
+Background
+AutoExit
+BlueDoor, BlueTrap, OrangeDoor, OrangeTrap
+BlueDoorOpen, OrangeDoorOpen
+Wall, Player, Block, BlueDoorClosed, OrangeDoorClosed
+WallTop
+WallRight
+WallLeft
+WallBottom
+Exit, DoneExit
+BlueChain
+OrangeChain
+PlayerSprite
+BlueDebt, BlueNoDebt
+OrangeDebt, OrangeNoDebt
+BlueDeletedOne
+orangeDeletedOne
+BlueSecondDebt
+OrangeSecondDebt
+BlueTarget
+OrangeTarget
+EditorSprite
+BlueNone
+BlueAll
+BlueNotAll
+OrangeNone
+OrangeAll
+OrangeNotAll
+
+
+======
+RULES
+======
+
+(Win)
+[ DoneExit ] -> win
+[ > Player | Exit ] -> [ | DoneExit ] sfx5
+[ AutoExit ] -> win
+
+(Decorative Rules)
+[ EditorSprite ] -> []
+
+
+up   [ Wall | no Wall ] -> [ Wall WallTop    | no Wall ]
+down [ Wall | no Wall ] -> [ Wall WallBottom | no Wall ]
+right[ Wall | no Wall ] -> [ Wall WallRight  | no Wall ]
+left [ Wall | no Wall ] -> [ Wall WallLeft   | no Wall ]
+
+[ PlayerSprite ] -> []
+[ vertical Player ] -> [ vertical PlayerNeutral ]
+[ left     Player ] -> [ left     PlayerLeft    ]
+[ right    Player ] -> [ right    PlayerRight   ]
+late [ PlayerNeutral ] -> [ PlayerSpriteNeutral PlayerNeutral ]
+late [ PlayerLeft    ] -> [ PlayerSpriteLeft    PlayerLeft    ]
+late [ PlayerRight   ] -> [ PlayerSpriteRight   PlayerRight ]
+
+
+(Pressure)
+[ Block BlueChainR___ BlueDebt ] -> [ BlueChainR___ right Block BlueDebt ]
+[ Block BlueChain_L__ BlueDebt ] -> [ BlueChain_L__ left  Block BlueDebt ]
+[ Block BlueChain__U_ BlueDebt ] -> [ BlueChain__U_ up    Block BlueDebt ]
+[ Block BlueChain___D BlueDebt ] -> [ BlueChain___D down  Block BlueDebt ]
+[ Block OrangeChainR___ OrangeDebt ] -> [ OrangeChainR___ right Block OrangeDebt ]
+[ Block OrangeChain_L__ OrangeDebt ] -> [ OrangeChain_L__ left  Block OrangeDebt ]
+[ Block OrangeChain__U_ OrangeDebt ] -> [ OrangeChain__U_ up    Block OrangeDebt ]
+[ Block OrangeChain___D OrangeDebt ] -> [ OrangeChain___D down  Block OrangeDebt ]
+
+(Push: at this point so that it undoes the pressure)
+[ > Player | Block ] -> [ > Player | > Block ] sfx1
+
+( contradiction )
+right [ right Block BlueChain no BlueChainWithR | BlueChain ] -> [ Block BlueChain | BlueChain   ]
+left  [ left  Block BlueChain no BlueChainWithL | BlueChain ] -> [ Block BlueChain | BlueChain   ]
+up    [ up    Block BlueChain no BlueChainWithU | BlueChain ] -> [ Block BlueChain | BlueChain   ]
+down  [ down  Block BlueChain no BlueChainWithD | BlueChain ] -> [ Block BlueChain | BlueChain   ]
+right [ right Block OrangeChain no OrangeChainWithR | OrangeChain ] -> [ Block OrangeChain | OrangeChain   ]
+left  [ left  Block OrangeChain no OrangeChainWithL | OrangeChain ] -> [ Block OrangeChain | OrangeChain   ]
+up    [ up    Block OrangeChain no OrangeChainWithU | OrangeChain ] -> [ Block OrangeChain | OrangeChain   ]
+down  [ down  Block OrangeChain no OrangeChainWithD | OrangeChain ] -> [ Block OrangeChain | OrangeChain   ]
+
+
+
+[ no BlueDebt   ] -> [ BlueNoDebt ]
+[ no OrangeDebt ] -> [ OrangeNoDebt ]
+
+(Delete chain)
+right [ BlueChainR___ right Block BlueDebtOrNot | no Blocker BlueChainRL__ ] -> [ | BlueChainR___ Block BlueDeletedOne ]
+left  [ BlueChain_L__ left  Block BlueDebtOrNot | no Blocker BlueChainRL__ ] -> [ | BlueChain_L__ Block BlueDeletedOne ]
+up    [ BlueChain__U_ up    Block BlueDebtOrNot | no Blocker BlueChain__UD ] -> [ | BlueChain__U_ Block BlueDeletedOne ]
+down  [ BlueChain___D down  Block BlueDebtOrNot | no Blocker BlueChain__UD ] -> [ | BlueChain___D Block BlueDeletedOne ]
+right [ OrangeChainR___ right Block OrangeDebtOrNot | no Blocker OrangeChainRL__ ] -> [ | OrangeChainR___ Block OrangeDeletedOne ]
+left  [ OrangeChain_L__ left  Block OrangeDebtOrNot | no Blocker OrangeChainRL__ ] -> [ | OrangeChain_L__ Block OrangeDeletedOne ]
+up    [ OrangeChain__U_ up    Block OrangeDebtOrNot | no Blocker OrangeChain__UD ] -> [ | OrangeChain__U_ Block OrangeDeletedOne ]
+down  [ OrangeChain___D down  Block OrangeDebtOrNot | no Blocker OrangeChain__UD ] -> [ | OrangeChain___D Block OrangeDeletedOne ]
+
+
+(Delete chain and rotate )
+right [ BlueChainR___ right Block BlueDebtOrNot | no Blocker BlueChain_LU_ ] -> [ | BlueChain__U_ Block BlueDeletedOne ]
+right [ BlueChainR___ right Block BlueDebtOrNot | no Blocker BlueChain_L_D ] -> [ | BlueChain___D Block BlueDeletedOne ]
+
+left  [ BlueChain_L__ left  Block BlueDebtOrNot | no Blocker BlueChainR_U_ ] -> [ | BlueChain__U_ Block BlueDeletedOne ]
+left  [ BlueChain_L__ left  Block BlueDebtOrNot | no Blocker BlueChainR__D ] -> [ | BlueChain___D Block BlueDeletedOne ]
+
+up    [ BlueChain__U_ up    Block BlueDebtOrNot | no Blocker BlueChainR__D ] -> [ | BlueChainR___ Block BlueDeletedOne ]
+up    [ BlueChain__U_ up    Block BlueDebtOrNot | no Blocker BlueChain_L_D ] -> [ | BlueChain_L__ Block BlueDeletedOne ]
+
+down  [ BlueChain___D down  Block BlueDebtOrNot | no Blocker BlueChainR_U_ ] -> [ | BlueChainR___ Block BlueDeletedOne ]
+down  [ BlueChain___D down  Block BlueDebtOrNot | no Blocker BlueChain_LU_ ] -> [ | BlueChain_L__ Block BlueDeletedOne ]
+
+right [ OrangeChainR___ right Block OrangeDebtOrNot | no Blocker OrangeChain_LU_ ] -> [ | OrangeChain__U_ Block OrangeDeletedOne ]
+right [ OrangeChainR___ right Block OrangeDebtOrNot | no Blocker OrangeChain_L_D ] -> [ | OrangeChain___D Block OrangeDeletedOne ]
+
+left  [ OrangeChain_L__ left  Block OrangeDebtOrNot | no Blocker OrangeChainR_U_ ] -> [ | OrangeChain__U_ Block OrangeDeletedOne ]
+left  [ OrangeChain_L__ left  Block OrangeDebtOrNot | no Blocker OrangeChainR__D ] -> [ | OrangeChain___D Block OrangeDeletedOne ]
+
+up    [ OrangeChain__U_ up    Block OrangeDebtOrNot | no Blocker OrangeChainR__D ] -> [ | OrangeChainR___ Block OrangeDeletedOne ]
+up    [ OrangeChain__U_ up    Block OrangeDebtOrNot | no Blocker OrangeChain_L_D ] -> [ | OrangeChain_L__ Block OrangeDeletedOne ]
+
+down  [ OrangeChain___D down  Block OrangeDebtOrNot | no Blocker OrangeChainR_U_ ] -> [ | OrangeChainR___ Block OrangeDeletedOne ]
+down  [ OrangeChain___D down  Block OrangeDebtOrNot | no Blocker OrangeChain_LU_ ] -> [ | OrangeChain_L__ Block OrangeDeletedOne ]
+
+
+
+
+
+(Opposite)
+left  [ BlueChainR___ left  Block | no Blocker ] -> [ BlueChainRL__ | BlueChainR___ Block BlueDebt ]
+right [ BlueChain_L__ right Block | no Blocker ] -> [ BlueChainRL__ | BlueChain_L__ Block BlueDebt ]
+down  [ BlueChain__U_ down  Block | no Blocker ] -> [ BlueChain__UD | BlueChain__U_ Block BlueDebt ]
+up    [ BlueChain___D up    Block | no Blocker ] -> [ BlueChain__UD | BlueChain___D Block BlueDebt ]
+left  [ OrangeChainR___ left  Block | no Blocker ] -> [ OrangeChainRL__ | OrangeChainR___ Block OrangeDebt ]
+right [ OrangeChain_L__ right Block | no Blocker ] -> [ OrangeChainRL__ | OrangeChain_L__ Block OrangeDebt ]
+down  [ OrangeChain__U_ down  Block | no Blocker ] -> [ OrangeChain__UD | OrangeChain__U_ Block OrangeDebt ]
+up    [ OrangeChain___D up    Block | no Blocker ] -> [ OrangeChain__UD | OrangeChain___D Block OrangeDebt ]
+
+(Sides)
+( - R)
+up    [ BlueChainR___ up    Block | no Blocker ] -> [ BlueChainR_U_ | BlueChain___D Block BlueDebt ]
+down  [ BlueChainR___ down  Block | no Blocker ] -> [ BlueChainR__D | BlueChain__U_ Block BlueDebt ]
+up    [ OrangeChainR___ up    Block | no Blocker ] -> [ OrangeChainR_U_ | OrangeChain___D Block OrangeDebt ]
+down  [ OrangeChainR___ down  Block | no Blocker ] -> [ OrangeChainR__D | OrangeChain__U_ Block OrangeDebt ]
+
+( - L)
+up    [ BlueChain_L__ up    Block | no Blocker ] -> [ BlueChain_LU_ | BlueChain___D Block BlueDebt ]
+down  [ BlueChain_L__ down  Block | no Blocker ] -> [ BlueChain_L_D | BlueChain__U_ Block BlueDebt ]
+up    [ OrangeChain_L__ up    Block | no Blocker ] -> [ OrangeChain_LU_ | OrangeChain___D Block OrangeDebt ]
+down  [ OrangeChain_L__ down  Block | no Blocker ] -> [ OrangeChain_L_D | OrangeChain__U_ Block OrangeDebt ]
+
+( - U)
+left [ BlueChain__U_ left   Block | no Blocker ] -> [ BlueChain_LU_ | BlueChainR___ Block BlueDebt ]
+right[ BlueChain__U_ right  Block | no Blocker ] -> [ BlueChainR_U_ | BlueChain_L__ Block BlueDebt ]
+left [ OrangeChain__U_ left   Block | no Blocker ] -> [ OrangeChain_LU_ | OrangeChainR___ Block OrangeDebt ]
+right[ OrangeChain__U_ right  Block | no Blocker ] -> [ OrangeChainR_U_ | OrangeChain_L__ Block OrangeDebt ]
+
+( - D)
+left [ BlueChain___D left   Block | no Blocker ] -> [ BlueChain_L_D | BlueChainR___ Block BlueDebt ]
+right[ BlueChain___D right  Block | no Blocker ] -> [ BlueChainR__D | BlueChain_L__ Block BlueDebt ]
+left [ OrangeChain___D left   Block | no Blocker ] -> [ OrangeChain_L_D | OrangeChainR___ Block OrangeDebt ]
+right[ OrangeChain___D right  Block | no Blocker ] -> [ OrangeChainR__D | OrangeChain_L__ Block OrangeDebt ]
+
+( Cancel moves)
+[ > Block        | Blocker ] -> [ Block       | Blocker ]
+
+[ > Player | No Blocker ] -> [ | Player ] again
+
+(Reverse move)
+[ BlueDebt BlueChainExtreme no BlueDeletedOne ] -> [ BlueDebt BlueChainExtreme BlueSecondDebt ]
+[ OrangeDebt OrangeChainExtreme no OrangeDeletedOne ] -> [ OrangeDebt OrangeChainExtreme OrangeSecondDebt ]
+
+startloop
+    right [ BlueSecondDebt BlueChainWithR | BlueChain no  BlueSecondDebt ] -> [  BlueSecondDebt BlueChainWithR | BlueChain  BlueSecondDebt ]
+    left  [  BlueSecondDebt BlueChainWithL | BlueChain no  BlueSecondDebt ] -> [  BlueSecondDebt BlueChainWithL | BlueChain  BlueSecondDebt ]
+    up    [  BlueSecondDebt BlueChainWithU | BlueChain no  BlueSecondDebt ] -> [  BlueSecondDebt BlueChainWithU | BlueChain  BlueSecondDebt ]
+    down  [  BlueSecondDebt BlueChainWithD | BlueChain no  BlueSecondDebt ] -> [  BlueSecondDebt BlueChainWithD | BlueChain  BlueSecondDebt ]
+
+    right [ OrangeSecondDebt OrangeChainWithR | OrangeChain no  OrangeSecondDebt ] -> [  OrangeSecondDebt OrangeChainWithR | OrangeChain  OrangeSecondDebt ]
+    left  [  OrangeSecondDebt OrangeChainWithL | OrangeChain no  OrangeSecondDebt ] -> [  OrangeSecondDebt OrangeChainWithL | OrangeChain  OrangeSecondDebt ]
+    up    [  OrangeSecondDebt OrangeChainWithU | OrangeChain no  OrangeSecondDebt ] -> [  OrangeSecondDebt OrangeChainWithU | OrangeChain  OrangeSecondDebt ]
+    down  [  OrangeSecondDebt OrangeChainWithD | OrangeChain no  OrangeSecondDebt ] -> [  OrangeSecondDebt OrangeChainWithD | OrangeChain  OrangeSecondDebt ]
+
+endloop
+
+
+[ Block BlueChainR___ BlueSecondDebt no BlueDebt ] ->  [ right Block BlueChainR___ BlueSecondDebt no BlueDebt ]
+[ Block BlueChain_L__ BlueSecondDebt no BlueDebt ] ->  [ left  Block BlueChain_L__ BlueSecondDebt no BlueDebt ]
+[ Block BlueChain__U_ BlueSecondDebt no BlueDebt ] ->  [ up    Block BlueChain__U_ BlueSecondDebt no BlueDebt ]
+[ Block BlueChain___D BlueSecondDebt no BlueDebt ] ->  [ down  Block BlueChain___D BlueSecondDebt no BlueDebt ]
+[ Block OrangeChainR___ OrangeSecondDebt no OrangeDebt ] ->  [ right Block OrangeChainR___ OrangeSecondDebt no OrangeDebt ]
+[ Block OrangeChain_L__ OrangeSecondDebt no OrangeDebt ] ->  [ left  Block OrangeChain_L__ OrangeSecondDebt no OrangeDebt ]
+[ Block OrangeChain__U_ OrangeSecondDebt no OrangeDebt ] ->  [ up    Block OrangeChain__U_ OrangeSecondDebt no OrangeDebt ]
+[ Block OrangeChain___D OrangeSecondDebt no OrangeDebt ] ->  [ down  Block OrangeChain___D OrangeSecondDebt no OrangeDebt ]
+
+[ BlueDeletedOne   ] -> [] SFX2
+[ OrangeDeletedOne ] -> [] SFX2
+
+
+
+(Delete second debt chain)
+right [ BlueChainR___ right Block BlueSecondDebt | no Blocker BlueChainRL__ ] -> [ | BlueChainR___ Block BlueDeletedOne BlueSecondDebt ]
+left  [ BlueChain_L__ left  Block BlueSecondDebt | no Blocker BlueChainRL__ ] -> [ | BlueChain_L__ Block BlueDeletedOne BlueSecondDebt ]
+up    [ BlueChain__U_ up    Block BlueSecondDebt | no Blocker BlueChain__UD ] -> [ | BlueChain__U_ Block BlueDeletedOne BlueSecondDebt ]
+down  [ BlueChain___D down  Block BlueSecondDebt | no Blocker BlueChain__UD ] -> [ | BlueChain___D Block BlueDeletedOne BlueSecondDebt ]
+right [ OrangeChainR___ right Block OrangeSecondDebt | no Blocker OrangeChainRL__ ] -> [ | OrangeChainR___ Block OrangeDeletedOne OrangeSecondDebt ]
+left  [ OrangeChain_L__ left  Block OrangeSecondDebt | no Blocker OrangeChainRL__ ] -> [ | OrangeChain_L__ Block OrangeDeletedOne OrangeSecondDebt ]
+up    [ OrangeChain__U_ up    Block OrangeSecondDebt | no Blocker OrangeChain__UD ] -> [ | OrangeChain__U_ Block OrangeDeletedOne OrangeSecondDebt ]
+down  [ OrangeChain___D down  Block OrangeSecondDebt | no Blocker OrangeChain__UD ] -> [ | OrangeChain___D Block OrangeDeletedOne OrangeSecondDebt ]
+
+(Delete chain and rotate )
+right [ BlueChainR___ right Block BlueSecondDebt | no Blocker BlueChain_LU_ ] -> [ | BlueChain__U_ Block BlueDeletedOne BlueSecondDebt ]
+right [ BlueChainR___ right Block BlueSecondDebt | no Blocker BlueChain_L_D ] -> [ | BlueChain___D Block BlueDeletedOne BlueSecondDebt ]
+
+left  [ BlueChain_L__ left  Block BlueSecondDebt | no Blocker BlueChainR_U_ ] -> [ | BlueChain__U_ Block BlueDeletedOne BlueSecondDebt ]
+left  [ BlueChain_L__ left  Block BlueSecondDebt | no Blocker BlueChainR__D ] -> [ | BlueChain___D Block BlueDeletedOne BlueSecondDebt ]
+
+up    [ BlueChain__U_ up    Block BlueSecondDebt | no Blocker BlueChainR__D ] -> [ | BlueChainR___ Block BlueDeletedOne BlueSecondDebt ]
+up    [ BlueChain__U_ up    Block BlueSecondDebt | no Blocker BlueChain_L_D ] -> [ | BlueChain_L__ Block BlueDeletedOne BlueSecondDebt ]
+
+down  [ BlueChain___D down  Block BlueSecondDebt | no Blocker BlueChainR_U_ ] -> [ | BlueChainR___ Block BlueDeletedOne BlueSecondDebt ]
+down  [ BlueChain___D down  Block BlueSecondDebt | no Blocker BlueChain_LU_ ] -> [ | BlueChain_L__ Block BlueDeletedOne BlueSecondDebt ]
+
+right [ OrangeChainR___ right Block OrangeSecondDebt | no Blocker OrangeChain_LU_ ] -> [ | OrangeChain__U_ Block OrangeDeletedOne OrangeSecondDebt ]
+right [ OrangeChainR___ right Block OrangeSecondDebt | no Blocker OrangeChain_L_D ] -> [ | OrangeChain___D Block OrangeDeletedOne OrangeSecondDebt ]
+
+left  [ OrangeChain_L__ left  Block OrangeSecondDebt | no Blocker OrangeChainR_U_ ] -> [ | OrangeChain__U_ Block OrangeDeletedOne OrangeSecondDebt ]
+left  [ OrangeChain_L__ left  Block OrangeSecondDebt | no Blocker OrangeChainR__D ] -> [ | OrangeChain___D Block OrangeDeletedOne OrangeSecondDebt ]
+
+up    [ OrangeChain__U_ up    Block OrangeSecondDebt | no Blocker OrangeChainR__D ] -> [ | OrangeChainR___ Block OrangeDeletedOne OrangeSecondDebt ]
+up    [ OrangeChain__U_ up    Block OrangeSecondDebt | no Blocker OrangeChain_L_D ] -> [ | OrangeChain_L__ Block OrangeDeletedOne OrangeSecondDebt ]
+
+down  [ OrangeChain___D down  Block OrangeSecondDebt | no Blocker OrangeChainR_U_ ] -> [ | OrangeChainR___ Block OrangeDeletedOne OrangeSecondDebt ]
+down  [ OrangeChain___D down  Block OrangeSecondDebt | no Blocker OrangeChain_LU_ ] -> [ | OrangeChain_L__ Block OrangeDeletedOne OrangeSecondDebt ]
+
+
+
+startloop
+    right [ BlueSecondDebt BlueChainWithR BlueDeletedOne No BlueDebt | BlueSecondDebt BlueChain no BlueDeletedOne ] -> [ BlueSecondDebt BlueChainWithR BlueDeletedOne | BlueSecondDebt BlueChain BlueDeletedOne ]
+    left  [ BlueSecondDebt BlueChainWithL BlueDeletedOne No BlueDebt | BlueSecondDebt BlueChain no BlueDeletedOne ] -> [ BlueSecondDebt BlueChainWithL BlueDeletedOne | BlueSecondDebt BlueChain BlueDeletedOne ]
+    up    [ BlueSecondDebt BlueChainWithU BlueDeletedOne No BlueDebt | BlueSecondDebt BlueChain no BlueDeletedOne ] -> [ BlueSecondDebt BlueChainWithU BlueDeletedOne | BlueSecondDebt BlueChain BlueDeletedOne ]
+    down  [ BlueSecondDebt BlueChainWithD BlueDeletedOne No BlueDebt | BlueSecondDebt BlueChain no BlueDeletedOne ] -> [ BlueSecondDebt BlueChainWithD BlueDeletedOne | BlueSecondDebt BlueChain BlueDeletedOne ]
+    right [ OrangeSecondDebt OrangeChainWithR OrangeDeletedOne No OrangeDebt | OrangeSecondDebt OrangeChain no OrangeDeletedOne ] -> [ OrangeSecondDebt OrangeChainWithR OrangeDeletedOne | OrangeSecondDebt OrangeChain OrangeDeletedOne ]
+    left  [ OrangeSecondDebt OrangeChainWithL OrangeDeletedOne No OrangeDebt | OrangeSecondDebt OrangeChain no OrangeDeletedOne ] -> [ OrangeSecondDebt OrangeChainWithL OrangeDeletedOne | OrangeSecondDebt OrangeChain OrangeDeletedOne ]
+    up    [ OrangeSecondDebt OrangeChainWithU OrangeDeletedOne No OrangeDebt | OrangeSecondDebt OrangeChain no OrangeDeletedOne ] -> [ OrangeSecondDebt OrangeChainWithU OrangeDeletedOne | OrangeSecondDebt OrangeChain OrangeDeletedOne ]
+    down  [ OrangeSecondDebt OrangeChainWithD OrangeDeletedOne No OrangeDebt | OrangeSecondDebt OrangeChain no OrangeDeletedOne ] -> [ OrangeSecondDebt OrangeChainWithD OrangeDeletedOne | OrangeSecondDebt OrangeChain OrangeDeletedOne ]
+endloop
+
+
+( Cancel blue moves)
+[ > Block        | Blocker ] -> [ Block       | Blocker ]
+
+
+[ BlueSecondDebt BlueDebt BlueDeletedOne ] -> [ BlueSecondDebt ]
+[ BlueSecondDebt ] -> []
+[ BlueNoDebt ] -> []
+[ BlueDeletedOne ] -> [] sfx2
+[ OrangeSecondDebt OrangeDebt OrangeDeletedOne ] -> [ OrangeSecondDebt ]
+[ OrangeSecondDebt ] -> []
+[ OrangeNoDebt ] -> []
+[ OrangeDeletedOne ] -> [] sfx2
+
+(door logic)
+( : helpers)
+late [ BlueNone ] -> []
+late [ BlueAll  ] -> []
+late [ BlueNotAll ] -> []
+late [ Player   ] -> [ Player BlueNone BlueAll  ]
+late [ BlueBlock BlueTarget    ][ BlueNone ] -> [ BlueBlock BlueTarget ][ ]
+late [ BlueTarget no BlueBlock ][ BlueAll  ] -> [           BlueTarget ][ BlueNotAll ]
+
+late [ OrangeNone ] -> []
+late [ OrangeAll  ] -> []
+late [ OrangeNotAll ] -> []
+late [ Player   ] -> [ Player OrangeNone OrangeAll  ]
+late [ OrangeBlock OrangeTarget    ][ OrangeNone ] -> [ OrangeBlock OrangeTarget ][ ]
+late [ OrangeTarget no OrangeBlock ][ OrangeAll  ] -> [           OrangeTarget ][ OrangeNotAll ]
+
+
+
+( : trap)
+late [ BlueTrap no Blocker ][ BlueTarget BlueBlock ] -> [ BlueTrap BlueDoorClosed  ][BlueTarget BlueBlock] SFX3
+late [ BlueTrap BlueDoorClosed ][ BlueNone ]  -> [ BlueTrap ][ BlueNone ] SFX4
+
+late [ OrangeTrap no Blocker ][ OrangeTarget OrangeBlock ] -> [ OrangeTrap OrangeDoorClosed  ][OrangeTarget OrangeBlock] SFX3
+late [ OrangeTrap OrangeDoorClosed ][ OrangeNone ]  -> [ OrangeTrap ][ OrangeNone ] SFX4
+
+
+( : door)
+late [ BlueDoor no Blocker ][ BlueNotAll ] -> [ BlueDoor BlueDoorClosed ][ BlueNotAll ] SFX3
+late [ BlueDoor BlueDoorClosed ][ BlueAll ] -> [ BlueDoor ][ BlueAll ] SFX4
+
+late [ OrangeDoor no Blocker ][ OrangeNotAll ] -> [ OrangeDoor OrangeDoorClosed ][ OrangeNotAll ] SFX3
+late [ OrangeDoor OrangeDoorClosed ][ OrangeAll ] -> [ OrangeDoor ][ OrangeAll ] SFX4
+
+
+( : open)
+late [ BlueTrapOrDoor no BlueDoorClosed ] -> [ BlueTrapOrDoor BlueDoorOpen ]
+late [ BlueDoorOpen BlueDoorClosed ] -> [ BlueDoorClosed ]
+
+late [ OrangeTrapOrDoor no OrangeDoorClosed ] -> [ OrangeTrapOrDoor OrangeDoorOpen ]
+late [ OrangeDoorOpen OrangeDoorClosed ] -> [ OrangeDoorClosed ]
+
+
+
+
+==============
+WINCONDITIONS
+==============
+
+
+
+=======
+LEVELS
+=======
+
+message A game by Vexorian
+
+
+############
+#......#..##
+#..P...#.X##
+#......#..##
+############
+
+
+level_select_point (01)
+message You must leave
+
+############
+#......#..##
+#..P...o..E#
+#......#..##
+############
+
+level_select_point (02)
+
+message A hex binds those blocks together.
+
+############
+#..#########
+#.prhhhl.###
+#....###.#e#
+#..#.###...#
+#.##.###...#
+#.##.###...#
+############
+
+level_select_point (03)
+
+message A hex binds the ground to the wall.
+
+#############
+#.D.....#...#
+#.V.....#..##
+#.v.....k.###
+#pv..@..k.e##
+#.v.....k.###
+#.v.....#..##
+#.U.....#...#
+#############
+
+level_select_point (04)
+
+message A reversal hex
+
+
+#############
+#.d..#..#...#
+#.v..#..#..##
+#.v..j..k.###
+#pv@.j..k.e##
+#.v..j..k.###
+#.v..#..#..##
+#.u..#..#...#
+#############
+
+level_select_point (05)
+
+message The hex is unreasonable.
+
+###############
+#...###########
+#..@#....#....#
+#.....p..#....#
+#.rhhhhhlk....#
+#..@.....#....#
+#..#.....##e###
+###############
+
+
+
+
+level_select_point (06)
+
+message Who can undo the  wall's hex?
+
+
+###############
+##...#@#...#..#
+##.....#.p.k..#
+#rhhwhhl...#q.#
+##.##......#..#
+##.######..####
+##.#$...j..a.e#
+###############
+
+level_select_point (07)
+
+message The hex won't let go.
+
+#################
+####.k.......####
+#....#.......e###
+####j######..####
+####......#######
+#...............#
+#.rhhhhhwwhhhl..#
+#.##@....#......#
+#.##.##..#...p..#
+#.##.....#......#
+#........#......#
+#################
+
+level_select_point (08)
+
+message Conflicting goals.
+
+#################
+####....#########
+####..#.#########
+####..$.@.$.@...#
+####....2...d...#
+######..|#..v...#
+######..|###v...#
+##.#.#..|###v...#
+#e.a.k..|###vp..#
+##.#.#..|###v...#
+######..8...u...#
+#################
+
+
+level_select_point (09)
+
+message Cooperate to leave this place? But you are alone.
+
+##################
+#...####.d....q.$#
+#...####.v....####
+#...e###.v.......#
+#...####.v.p.....#
+#...####.v.......#
+##a#####.v....#b##
+##.###.#.u....#..#
+##..k..j...@..b..#
+########......#..#
+##################
+
+Message You are out
+(
+
+
+
+##################
+#................#
+#.....6---4..$...#
+#..d.......P.....#
+#..v.............#
+#..v..@.rhhhhl...#
+#..v...#.........#
+#..v.............#
+#..u.............#
+##k##j###aa#bb####
+##.##.###..#.....#
+##################
+
+
+##################
+#.....p..........#
+#.....6---4..$...#
+#..d.........$...#
+#..v.............#
+#..v..@@rhhhhl...#
+#..v...#.........#
+#..v..@@.........#
+#..u.............#
+#................#
+#................#
+##################
+
+##################
+#................#
+#................#
+#..D.............#
+#..V.............#
+#..V..@@RHHHHL...#
+#..V.P.#.........#
+#..V..@@.........#
+#..U.............#
+#................#
+#................#
+##################
+
+
+##################
+#................#
+#................#
+#..D....D........#
+#..V....U........#
+#..V.............#
+#..V.............#
+#..V....RHHHHL...#
+#..V.P...........#
+#..V.............#
+#..U.............#
+#........o.......#
+#................#
+##################
+)
