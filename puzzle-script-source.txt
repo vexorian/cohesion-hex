@@ -1,4 +1,4 @@
-title Cohesion Hex 3.72
+title Cohesion Hex 3.77
 (Note always before sharing set SOUND_VOL to 0.05 in the HTML)
 ( Requires Pancelor's fork : https://pancelor.com/PuzzleScript/editor.html)
 
@@ -6,13 +6,19 @@ title Cohesion Hex 3.72
 author vexorian
 homepage vexorian.com
 
-realtime_interval 0.033333
+
+
+
 
 background_color #000000
 text_color       #6C6862
 
 (debug)
+
+realtime_interval 0.033333
 (verbose_logging)
+noaction
+
 
 run_rules_on_level_start
 
@@ -996,6 +1002,9 @@ ChainStressed
 RULES
 ======
 
+(disable action for debug)
+[ action Player ] -> [ Player ]
+
 
 [ TopLeft ] -> []
 up    [ Background | ] -> [ action Background | ]
@@ -1101,10 +1110,10 @@ late [ PlayerRight   ] -> [ PlayerSpriteRight   PlayerRight ]
 
 
 ( Stuck Skull)
-[ StuckSkullL Skull ] -> [ left  Skull ]
-[ StuckSkullR Skull ] -> [ right Skull ]
-[ StuckSkullU Skull ] -> [ up    Skull ]
-[ StuckSkullD Skull ] -> [ down  Skull ]
+right [ StuckSkullR Skull | Block ] -> [ Skull | right Block]
+left  [ StuckSkullL Skull | Block ] -> [ Skull | left  Block]
+up    [ StuckSkullU Skull | Block ] -> [ Skull | up    Block]
+down  [ StuckSkullD Skull | Block ] -> [ Skull | up    Block]
 [ StuckSkull ] -> []
 
 (Push: at this point so that it undoes the pressure)
@@ -1114,14 +1123,14 @@ startloop
 endloop
 
 ( contradiction )
-right [ right Block BlueChain no BlueChainWithR | BlueChain ] -> [ Block BlueChain BlueFlickerR1 | BlueFlickerL1 BlueChain   ] sfx6
-left  [ left  Block BlueChain no BlueChainWithL | BlueChain ] -> [ Block BlueChain BlueFlickerL1 | BlueFlickerR1 BlueChain   ] sfx6
-up    [ up    Block BlueChain no BlueChainWithU | BlueChain ] -> [ Block BlueChain BlueFlickerU1 | BlueFlickerD1 BlueChain   ] sfx6
-down  [ down  Block BlueChain no BlueChainWithD | BlueChain ] -> [ Block BlueChain BlueFlickerD1 | BlueFlickerU1 BlueChain   ] sfx6
-right [ right Block OrangeChain no OrangeChainWithR | OrangeChain ] -> [ Block OrangeChain OrangeFlickerR1 | OrangeFlickerL1 OrangeChain   ] sfx6
-left  [ left  Block OrangeChain no OrangeChainWithL | OrangeChain ] -> [ Block OrangeChain OrangeFlickerL1 | OrangeFlickerR1 OrangeChain   ] sfx6
-up    [ up    Block OrangeChain no OrangeChainWithU | OrangeChain ] -> [ Block OrangeChain OrangeFlickerU1 | OrangeFlickerD1 OrangeChain   ] sfx6
-down  [ down  Block OrangeChain no OrangeChainWithD | OrangeChain ] -> [ Block OrangeChain OrangeFlickerD1 | OrangeFlickerU1 OrangeChain   ] sfx6
+right [ right Block BlueChainExtreme no BlueChainWithR | BlueChain ] -> [ Block BlueChainExtreme BlueFlickerR1 | BlueFlickerL1 BlueChain   ] sfx6
+left  [ left  Block BlueChainExtreme no BlueChainWithL | BlueChain ] -> [ Block BlueChainExtreme BlueFlickerL1 | BlueFlickerR1 BlueChain   ] sfx6
+up    [ up    Block BlueChainExtreme no BlueChainWithU | BlueChain ] -> [ Block BlueChainExtreme BlueFlickerU1 | BlueFlickerD1 BlueChain   ] sfx6
+down  [ down  Block BlueChainExtreme no BlueChainWithD | BlueChain ] -> [ Block BlueChainExtreme BlueFlickerD1 | BlueFlickerU1 BlueChain   ] sfx6
+right [ right Block OrangeChainExtreme no OrangeChainWithR | OrangeChain ] -> [ Block OrangeChainExtreme OrangeFlickerR1 | OrangeFlickerL1 OrangeChain   ] sfx6
+left  [ left  Block OrangeChainExtreme no OrangeChainWithL | OrangeChain ] -> [ Block OrangeChainExtreme OrangeFlickerL1 | OrangeFlickerR1 OrangeChain   ] sfx6
+up    [ up    Block OrangeChainExtreme no OrangeChainWithU | OrangeChain ] -> [ Block OrangeChainExtreme OrangeFlickerU1 | OrangeFlickerD1 OrangeChain   ] sfx6
+down  [ down  Block OrangeChainExtreme no OrangeChainWithD | OrangeChain ] -> [ Block OrangeChainExtreme OrangeFlickerD1 | OrangeFlickerU1 OrangeChain   ] sfx6
 
 
 
@@ -1403,6 +1412,16 @@ WINCONDITIONS
 LEVELS
 =======
 
+###########e##
+##........#.##
+##...p....#.##
+##.....2..#k##
+##.#...|....@#
+rwhl...|.....#
+##.#...8.....#
+##...........#
+##############
+
 message A game by Vexorian
 
 
@@ -1488,12 +1507,13 @@ message The hex will destroy what progress you make.
 
 ###############
 ##...#@#...#..#
-##.....#.p....#
-#rhhwhhl...#q.#
+##.....#.p..2.#
+#rhhwhhl...#8.#
 ##.##......#..#
-##.######..####
-##.#$...j..ake#
+##.##.###..####
+##.#$$..k..aje#
 ###############
+
 
 
 level_select_point (07)
@@ -1501,20 +1521,20 @@ level_select_point (07)
 
 message The hex is more powerful than you.
 
-###############
-##.#########..#
-#.@@########..#
-##..###....#..#
-#shhwwwhhl.#..#
-#.....####.#..#
-#..##.#....k..e
-#p.##.##/l##..#
-#..#...#v#.#..#
-##shhl.#\l.#..#
-##.#####...#..#
-#..........#..#
-#...###########
-###############
+##############
+#.##.#########
+#d..@@########
+#v.#.####....#
+#v.shhwwwhhl.#
+#v##/hhl.###.#
+#v#.v.#..#.#.#
+#v#pv##..k.#.#
+#v#.u##..#.#.#
+#v##.....#e#.#
+#\wh~#######.#
+###..........#
+##############
+
 
 
 
@@ -1567,9 +1587,9 @@ message Cooperate to leave this place? But you are alone.
 ##############
 
 
-level_select_point (10)
+level_select_point (11)
 
-message This is the tenth seal.
+message You can't change the past.
 
 
 ###############
@@ -1584,6 +1604,23 @@ message This is the tenth seal.
 #\wwwwhlk....##
 ###############
 
+level_select_point (12)
+
+message You are not ready for the 12-th seal.
+(Note: This one is very hard imo and may require knowledge of a mechanic not explained in earlier levels.
+
+The initial idea for this level was contributed by Tilmann @ discord)
+
+###############
+#.a.....2...#$#
+e.a...p.|...a.#
+#.a.....|...a.#
+###.#...|j@.#$#
+#rwhl...|...#k#
+###.#...|.....#
+###.....|.....#
+###.....8.....#
+###############
 
 
 Message You leave the dungeon.
