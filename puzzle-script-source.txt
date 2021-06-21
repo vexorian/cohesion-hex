@@ -1,9 +1,12 @@
-title Cohesion Hex 0.41
+title Cohesion Hex 3.72
 (Note always before sharing set SOUND_VOL to 0.05 in the HTML)
 ( Requires Pancelor's fork : https://pancelor.com/PuzzleScript/editor.html)
+
+(Note remember to thank Tilmann at discord for very usseful bug report.)
 author vexorian
 homepage vexorian.com
 
+realtime_interval 0.033333
 
 background_color #000000
 text_color       #6C6862
@@ -11,10 +14,8 @@ text_color       #6C6862
 (debug)
 (verbose_logging)
 
-again_interval 0.01
-(again_interval 1.00)
 run_rules_on_level_start
-realtime_interval 0.05
+
 enable_level_select
 
 
@@ -44,13 +45,6 @@ freely, subject to the following restrictions:
 )
 
 
-( Some comments here
-
-
-1. I really wanted to make logic for when you push a portal against a block, it would teleport the block through the other portal. But this
-has proven really difficult for puzzle script, so for now pushing portals towards other objects won't allow them to push
-
-
 )
 
 
@@ -74,6 +68,23 @@ blue
 .....
 0.0.0
 
+BlueTargetA1
+blue
+0.0.0
+.....
+0...0
+.....
+0.0.0
+
+BlueTargetA2
+blue
+.0.0.
+0...0
+.....
+0...0
+.0.0.
+
+
 OrangeTarget
 orange
 0.0.0
@@ -81,6 +92,22 @@ orange
 0...0
 .....
 0.0.0
+
+OrangeTargetA1
+orange
+0.0.0
+.....
+0...0
+.....
+0.0.0
+
+OrangeTargetA2
+orange
+.0.0.
+0...0
+.....
+0...0
+.0.0.
 
 
 
@@ -135,29 +162,211 @@ PlayerRight
 transparent
 
 PlayerSpriteNeutral
-black green #F2CBA4
+black green #E48F6F #397316
 .111.
-.121.
-10101
-.111.
+.123.
+10303
+.333.
 .0.0.
 
 
 PlayerSpriteLeft
-black green #F2CBA4
+black green #E48F6F #397316
 .111.
-.211.
-1010.
-.111.
+.233.
+1033.
+.333.
 .0.0.
 
 PlayerSpriteRight
-black green #F2CBA4
+black green #E48F6F #397316
 .111.
-.112.
-.0101
-.111.
+.132.
+.1303
+.333.
 .0.0.
+
+Skull
+#a0a0a0 #c0c0c0 black
+.111.
+12020
+12020
+10200
+.000.
+
+
+BlueFlickerR1
+#4747FF #000080
+.....
+.....
+..110
+.....
+.....
+
+BlueFlickerL1
+#4747FF #000080
+.....
+.....
+011..
+.....
+.....
+
+BlueFlickerR2
+#ffff00 #000080
+.....
+.....
+..110
+.....
+.....
+
+BlueFlickerL2
+#ffff00 #000080
+.....
+.....
+011..
+.....
+.....
+
+FlickerR3
+#ffff00
+.....
+....0
+.....
+.....
+.....
+
+FlickerL3
+#ffff00
+.....
+.....
+.....
+0....
+.....
+
+
+
+
+BlueFlickerU1
+#4747FF #000080
+..0..
+..1..
+..1..
+.....
+.....
+
+BlueFlickerD1
+#4747FF #000080
+.....
+.....
+..1..
+..1..
+..0..
+
+BlueFlickerU2
+#ffff00 #000080
+..0..
+..1..
+..1..
+.....
+.....
+
+BlueFlickerD2
+#ffff00 #000080
+.....
+.....
+..1..
+..1..
+..0..
+
+FlickerU3
+#ffff00
+...0.
+.....
+.....
+.....
+.....
+
+FlickerD3
+#ffff00
+.....
+.....
+.....
+.....
+.0...
+
+OrangeFlickerR1
+#F2C832 #8F761E
+.....
+.....
+..110
+.....
+.....
+
+OrangeFlickerL1
+#F2C832 #8F761E
+.....
+.....
+011..
+.....
+.....
+
+OrangeFlickerR2
+#ffff00 #8F761E
+.....
+.....
+..110
+.....
+.....
+
+OrangeFlickerL2
+#ffff00 #8F761E
+.....
+.....
+011..
+.....
+.....
+
+
+
+
+
+OrangeFlickerU1
+#F2C832 #8F761E
+..0..
+..1..
+..1..
+.....
+.....
+
+OrangeFlickerD1
+#F2C832 #8F761E
+.....
+.....
+..1..
+..1..
+..0..
+
+OrangeFlickerU2
+#ffff00 #8F761E
+..0..
+..1..
+..1..
+.....
+.....
+
+OrangeFlickerD2
+#ffff00 #8F761E
+.....
+.....
+..1..
+..1..
+..0..
+
+
+
+
+
+
 
 
 BlueBlock
@@ -250,6 +459,21 @@ BlueChain__UD
 ..0..
 ..1..
 ..1..
+
+ChainStressed
+transparent
+
+ChainStressedA1
+transparent
+
+ChainStressedA2
+red
+.....
+.....
+..0..
+.....
+.....
+
 
 BlueDoorClosed
 #2020FF #8080FF #0000c0
@@ -522,12 +746,86 @@ Exit
 DoneExit
 #321C12 #000000 #B66740
 .000.
-01120
-01120
-01120
-01120
+02110
+02110
+02110
+02110
 
 AutoExit
+transparent
+
+StuckSkullR
+transparent
+
+
+StuckSkullL
+transparent
+
+StuckSkullU
+transparent
+
+StuckSkullD
+transparent
+
+
+
+Tic0
+transparent
+
+Tic1
+transparent
+
+Tic2
+transparent
+
+Tic3
+transparent
+
+Tic4
+transparent
+
+Tic5
+transparent
+
+Tic6
+transparent
+
+Tic7
+transparent
+
+Tic8
+transparent
+
+Tic9
+transparent
+
+Tic10
+transparent
+
+Tic11
+transparent
+
+
+
+
+
+
+
+
+
+PlayerStuckR
+transparent
+
+PlayerStuckL
+transparent
+
+PlayerStuckU
+transparent
+
+PlayerStuckD
+transparent
+
+TopLeft
 transparent
 
 =======
@@ -544,14 +842,21 @@ o = BlueBlock
 q = OrangeBlock
 $ = OrangeTarget
 
-
+Z = Skull
 
 L = BlueBlock and BlueChain_L__
+S = Skull     and BlueChainR___
+~ = Skull     and BlueChain_L__
 R = BlueBlock and BlueChainR___
 U = BlueBlock and BlueChain__U_
 D = BlueBlock and BlueChain___D
 H =               BlueChainRL__
 V =               BlueChain__UD
+
+/ =               BlueChainR__D
+\ =               BlueChainR_U_
+C =               OrangeChainR__D
+N =               OrangeChainR_U_
 
 
 4 = OrangeBlock and OrangeChain_L__
@@ -559,6 +864,7 @@ V =               BlueChain__UD
 8 = OrangeBlock and OrangeChain__U_
 2 = OrangeBlock and OrangeChain___D
 | =                 OrangeChain__UD
+I =                 OrangeChain__UD and OrangeTarget
 - =                 OrangeChainRL__
 
 K = BlueDoor and BlueDoorEditorSprite
@@ -601,7 +907,7 @@ OrangeChain = OrangeChainWithH or OrangeChainWithV
 
 ClosedDoor = BlueDoorClosed or OrangeDoorClosed
 
-Block = BlueBlock or OrangeBlock
+Block = BlueBlock or OrangeBlock or Skull
 Blocker = Block or Player or Wall or ClosedDoor
 
 BlueDebtOrNot = BlueDebt or BlueNoDebt
@@ -613,6 +919,22 @@ EditorSprite = BlueDoorEditorSprite or BlueTrapEditorSprite or OrangeDoorEditorS
 BlueTrapOrDoor = BlueTrap or BlueDoor
 OrangeTrapOrDoor =  OrangeTrap or OrangeDoor
 
+StuckSkull = StuckSkullL or StuckSkullR or StuckSkullU or StuckSkullD
+
+Flicker = BlueFlickerR1 or BlueFlickerL1 or BlueFlickerD1 or BlueFlickerU1 or BlueFlickerR2 or BlueFlickerL2 or BlueFlickerD2 or BlueFlickerU2 or FlickerR3 or FlickerL3 or FlickerD3 or FlickerU3 or OrangeFlickerR1 or  OrangeFlickerL1 or  OrangeFlickerD1 or  OrangeFlickerU1 or  OrangeFlickerR2 or  OrangeFlickerL2 or  OrangeFlickerD2 or  OrangeFlickerU2 or FlickerR3 or FlickerL3
+
+Tic = Tic0 or Tic1 or Tic2 or Tic3 or Tic4 or Tic5 or Tic6 or Tic7 or Tic8 or Tic9 or Tic10 or Tic11
+TicM2 = Tic0 or Tic2 or Tic4 or Tic6 or Tic8 or Tic10
+TicN3 = Tic0 or Tic2 or Tic3 or Tic5 or Tic6 or Tic8 or Tic9 or Tic11
+TicM3 = Tic0 or Tic3 or Tic6 or Tic9
+TicM4 = Tic0 or Tic4 or Tic8
+TicM6 = Tic0 or Tic6
+
+BlueTargetA   = BlueTargetA1   or BlueTargetA2
+OrangeTargetA = OrangeTargetA1 or OrangeTargetA2
+
+PlayerStuck = PlayerStuckR or PlayerStuckL or PlayerStuckU or PlayerStuckD
+
 =======
 SOUNDS
 =======
@@ -622,6 +944,10 @@ SFX2 57039908 (delete)
 SFX3 65197704 (close)
 SFX4 83104507 (open)
 SFX5 764900   (exit)
+SFX6 21292101 (flicker)
+SFX7 88629308 (rubber band)
+SFX8 88629308 (debt created)
+
 
 ================
 COLLISIONLAYERS
@@ -629,6 +955,8 @@ COLLISIONLAYERS
 
 Background
 AutoExit
+BlueTarget
+OrangeTarget
 BlueDoor, BlueTrap, OrangeDoor, OrangeTrap
 BlueDoorOpen, OrangeDoorOpen
 Wall, Player, Block, BlueDoorClosed, OrangeDoorClosed
@@ -639,6 +967,8 @@ WallBottom
 Exit, DoneExit
 BlueChain
 OrangeChain
+ChainStressedA1, ChainStressedA2
+Flicker
 PlayerSprite
 BlueDebt, BlueNoDebt
 OrangeDebt, OrangeNoDebt
@@ -646,8 +976,6 @@ BlueDeletedOne
 orangeDeletedOne
 BlueSecondDebt
 OrangeSecondDebt
-BlueTarget
-OrangeTarget
 EditorSprite
 BlueNone
 BlueAll
@@ -655,11 +983,63 @@ BlueNotAll
 OrangeNone
 OrangeAll
 OrangeNotAll
+StuckSkull
+TopLeft
+Tic
+BlueTargetA
+OrangeTargetA
+PlayerStuck
+ChainStressed
 
 
 ======
 RULES
 ======
+
+
+[ TopLeft ] -> []
+up    [ Background | ] -> [ action Background | ]
+left  [ Background | ] -> [ action Background | ]
+
+
+[ stationary Background ] -> [ Background TopLeft ]
+
+
+
+
+[ Tic no TopLeft ] -> [ ]
+
+
+
+[ Tic11 ] -> [ ]
+[ Tic10 ] -> [ Tic11 ]
+[ Tic9 ] -> [ Tic10 ]
+[ Tic8 ] -> [ Tic9 ]
+[ Tic7 ] -> [ Tic8 ]
+[ Tic6 ] -> [ Tic7 ]
+[ Tic5 ] -> [ Tic6 ]
+[ Tic4 ] -> [ Tic5 ]
+[ Tic3 ] -> [ Tic4 ]
+[ Tic2 ] -> [ Tic3 ]
+[ Tic1 ] -> [ Tic2 ]
+[ Tic0 ] -> [ Tic1 ]
+[ TopLeft no Tic ] -> [TopLeft Tic0 ]
+
+
+
+( redo the movements )
+[ stationary Player PlayerStuckR ] -> [ right Player ]
+[ stationary Player PlayerStuckL ] -> [ left  Player ]
+[ stationary Player PlayerStuckD ] -> [ down  Player ]
+[ stationary Player PlayerStuckU ] -> [ up    Player ]
+
+[ PlayerStuck ] -> []
+
+[ TicN3 ][ right Player ] -> [ TicN3 ][ stationary Player PlayerStuckR ]
+[ TicN3 ][ left  Player ] -> [ TicN3 ][ stationary Player PlayerStuckL ]
+[ TicN3 ][ up    Player ] -> [ TicN3 ][ stationary Player PlayerStuckU ]
+[ TicN3 ][ down  Player ] -> [ TicN3 ][ stationary Player PlayerStuckD ]
+
 
 (Win)
 [ DoneExit ] -> win
@@ -684,6 +1064,31 @@ late [ PlayerLeft    ] -> [ PlayerSpriteLeft    PlayerLeft    ]
 late [ PlayerRight   ] -> [ PlayerSpriteRight   PlayerRight ]
 
 
+[TicM2][ FlickerR3 ]-> [TicM2][]
+[TicM2][ FlickerL3 ]-> [TicM2][]
+[TicM2][ FlickerU3 ]-> [TicM2][]
+[TicM2][ FlickerD3 ]-> [TicM2][]
+
+[TicM4][ BlueFlickerR2 ]-> [TicM4][FlickerR3]
+[TicM4][ BlueFlickerL2 ]-> [TicM4][FlickerL3]
+[TicM4][ BlueFlickerU2 ]-> [TicM4][FlickerU3]
+[TicM4][ BlueFlickerD2 ]-> [TicM4][FlickerD3]
+[TicM4][ OrangeFlickerR2 ]-> [TicM4][FlickerR3]
+[TicM4][ OrangeFlickerL2 ]-> [TicM4][FlickerL3]
+[TicM4][ OrangeFlickerU2 ]-> [TicM4][FlickerU3]
+[TicM4][ OrangeFlickerD2 ]-> [TicM4][FlickerD3]
+
+
+[TicM4][ BlueFlickerR1 ]-> [TicM4][BlueFlickerR2]
+[TicM4][ BlueFlickerL1 ]-> [TicM4][BlueFlickerL2]
+[TicM4][ BlueFlickerU1 ]-> [TicM4][BlueFlickerU2]
+[TicM4][ BlueFlickerD1 ]-> [TicM4][BlueFlickerD2]
+[TicM4][ OrangeFlickerR1 ]-> [TicM4][OrangeFlickerR2]
+[TicM4][ OrangeFlickerL1 ]-> [TicM4][OrangeFlickerL2]
+[TicM4][ OrangeFlickerU1 ]-> [TicM4][OrangeFlickerU2]
+[TicM4][ OrangeFlickerD1 ]-> [TicM4][OrangeFlickerD2]
+
+
 (Pressure)
 [ Block BlueChainR___ BlueDebt ] -> [ BlueChainR___ right Block BlueDebt ]
 [ Block BlueChain_L__ BlueDebt ] -> [ BlueChain_L__ left  Block BlueDebt ]
@@ -694,18 +1099,29 @@ late [ PlayerRight   ] -> [ PlayerSpriteRight   PlayerRight ]
 [ Block OrangeChain__U_ OrangeDebt ] -> [ OrangeChain__U_ up    Block OrangeDebt ]
 [ Block OrangeChain___D OrangeDebt ] -> [ OrangeChain___D down  Block OrangeDebt ]
 
+
+( Stuck Skull)
+[ StuckSkullL Skull ] -> [ left  Skull ]
+[ StuckSkullR Skull ] -> [ right Skull ]
+[ StuckSkullU Skull ] -> [ up    Skull ]
+[ StuckSkullD Skull ] -> [ down  Skull ]
+[ StuckSkull ] -> []
+
 (Push: at this point so that it undoes the pressure)
-[ > Player | Block ] -> [ > Player | > Block ] sfx1
+[ > Player | Block no Skull ] -> [ > Player | > Block ] sfx1
+startloop
+	[ > Skull | stationary Block ] -> [ > Skull | > Block ]
+endloop
 
 ( contradiction )
-right [ right Block BlueChain no BlueChainWithR | BlueChain ] -> [ Block BlueChain | BlueChain   ]
-left  [ left  Block BlueChain no BlueChainWithL | BlueChain ] -> [ Block BlueChain | BlueChain   ]
-up    [ up    Block BlueChain no BlueChainWithU | BlueChain ] -> [ Block BlueChain | BlueChain   ]
-down  [ down  Block BlueChain no BlueChainWithD | BlueChain ] -> [ Block BlueChain | BlueChain   ]
-right [ right Block OrangeChain no OrangeChainWithR | OrangeChain ] -> [ Block OrangeChain | OrangeChain   ]
-left  [ left  Block OrangeChain no OrangeChainWithL | OrangeChain ] -> [ Block OrangeChain | OrangeChain   ]
-up    [ up    Block OrangeChain no OrangeChainWithU | OrangeChain ] -> [ Block OrangeChain | OrangeChain   ]
-down  [ down  Block OrangeChain no OrangeChainWithD | OrangeChain ] -> [ Block OrangeChain | OrangeChain   ]
+right [ right Block BlueChain no BlueChainWithR | BlueChain ] -> [ Block BlueChain BlueFlickerR1 | BlueFlickerL1 BlueChain   ] sfx6
+left  [ left  Block BlueChain no BlueChainWithL | BlueChain ] -> [ Block BlueChain BlueFlickerL1 | BlueFlickerR1 BlueChain   ] sfx6
+up    [ up    Block BlueChain no BlueChainWithU | BlueChain ] -> [ Block BlueChain BlueFlickerU1 | BlueFlickerD1 BlueChain   ] sfx6
+down  [ down  Block BlueChain no BlueChainWithD | BlueChain ] -> [ Block BlueChain BlueFlickerD1 | BlueFlickerU1 BlueChain   ] sfx6
+right [ right Block OrangeChain no OrangeChainWithR | OrangeChain ] -> [ Block OrangeChain OrangeFlickerR1 | OrangeFlickerL1 OrangeChain   ] sfx6
+left  [ left  Block OrangeChain no OrangeChainWithL | OrangeChain ] -> [ Block OrangeChain OrangeFlickerL1 | OrangeFlickerR1 OrangeChain   ] sfx6
+up    [ up    Block OrangeChain no OrangeChainWithU | OrangeChain ] -> [ Block OrangeChain OrangeFlickerU1 | OrangeFlickerD1 OrangeChain   ] sfx6
+down  [ down  Block OrangeChain no OrangeChainWithD | OrangeChain ] -> [ Block OrangeChain OrangeFlickerD1 | OrangeFlickerU1 OrangeChain   ] sfx6
 
 
 
@@ -787,10 +1203,20 @@ right[ BlueChain___D right  Block | no Blocker ] -> [ BlueChainR__D | BlueChain_
 left [ OrangeChain___D left   Block | no Blocker ] -> [ OrangeChain_L_D | OrangeChainR___ Block OrangeDebt ]
 right[ OrangeChain___D right  Block | no Blocker ] -> [ OrangeChainR__D | OrangeChain_L__ Block OrangeDebt ]
 
-( Cancel moves)
-[ > Block        | Blocker ] -> [ Block       | Blocker ]
+( Cancel debt moves)
+right [ > Skull | Blocker ] -> [ Skull StuckSkullR | Blocker ]
+left  [ > Skull | Blocker ] -> [ Skull StuckSkullL | Blocker ]
+up    [ > Skull | Blocker ] -> [ Skull StuckSkullU | Blocker ]
+down  [ > Skull | Blocker ] -> [ Skull StuckSkullD | Blocker ]
 
-[ > Player | No Blocker ] -> [ | Player ] again
+[ > Block        | moving Blocker ] -> [ Block       | moving Blocker ]
+[ > Block        |  stationary Blocker ] -> [ Block       | stationary Blocker ]
+
+[ > Block BlueChainExtreme ] -> [ Block BlueChainExtreme ]
+[ > Block OrangeChainExtreme ] -> [ Block OrangeChainExtreme ]
+
+
+[ > Player | No Blocker ] -> [ | Player ]
 
 (Reverse move)
 [ BlueDebt BlueChainExtreme no BlueDeletedOne ] -> [ BlueDebt BlueChainExtreme BlueSecondDebt ]
@@ -873,8 +1299,17 @@ startloop
 endloop
 
 
-( Cancel blue moves)
-[ > Block        | Blocker ] -> [ Block       | Blocker ]
+( Cancel debt2 moves)
+right [ > Skull | Blocker ] -> [ Skull StuckSkullR | Blocker ]
+left  [ > Skull | Blocker ] -> [ Skull StuckSkullL | Blocker ]
+up    [ > Skull | Blocker ] -> [ Skull StuckSkullU | Blocker ]
+down  [ > Skull | Blocker ] -> [ Skull StuckSkullD | Blocker ]
+
+[ > Block        | moving Blocker ] -> [ Block       | moving Blocker ]
+[ > Block        |  stationary Blocker ] -> [ Block       | stationary Blocker ]
+
+[ > Block BlueChainExtreme ] -> [ Block BlueChainExtreme ]
+[ > Block OrangeChainExtreme ] -> [ Block OrangeChainExtreme ]
 
 
 [ BlueSecondDebt BlueDebt BlueDeletedOne ] -> [ BlueSecondDebt ]
@@ -885,6 +1320,11 @@ endloop
 [ OrangeSecondDebt ] -> []
 [ OrangeNoDebt ] -> []
 [ OrangeDeletedOne ] -> [] sfx2
+
+
+
+
+
 
 (door logic)
 ( : helpers)
@@ -928,6 +1368,29 @@ late [ OrangeTrapOrDoor no OrangeDoorClosed ] -> [ OrangeTrapOrDoor OrangeDoorOp
 late [ OrangeDoorOpen OrangeDoorClosed ] -> [ OrangeDoorClosed ]
 
 
+(decorative lates)
+late [ BlueTargetA no BlueBlock            ] -> [ ]
+late [ TicM4][ BlueTarget BlueBlock BlueTargetA2   ] -> [ TicM4][ BlueTarget BlueBlock  ] 
+late [ TicM4][ BlueTarget BlueBlock BlueTargetA1   ] -> [ TicM4][ BlueTarget BlueBlock BlueTargetA2 ] 
+late [ TicM4][ BlueTarget BlueBlock no BlueTargetA ] -> [ TicM4][ BlueTarget BlueBlock BlueTargetA1  ] 
+late [ OrangeBlock BlueTarget ] -> [ OrangeBlock BlueTarget BlueTargetA1 ]
+
+late [ OrangeTargetA no OrangeBlock            ] -> [ ]
+late [ TicM4][ OrangeTarget OrangeBlock OrangeTargetA2   ] -> [ TicM4][ OrangeTarget OrangeBlock  ] 
+late [ TicM4][ OrangeTarget OrangeBlock OrangeTargetA1   ] -> [ TicM4][ OrangeTarget OrangeBlock OrangeTargetA2 ] 
+late [ TicM4][ OrangeTarget OrangeBlock no OrangeTargetA ] -> [ TicM4][ OrangeTarget OrangeBlock OrangeTargetA1  ] 
+late [ BlueBlock OrangeTarget ] -> [ BlueBlock OrangeTarget OrangeTargetA1 ]
+
+late [ BlueChain BlueDebt no ChainStressed ] -> [ BlueChain BlueDebt ChainStressed ] SFX8
+late [ OrangeChain OrangeDebt no ChainStressed ] -> [ OrangeChain OrangeDebt ChainStressed ] SFX8
+late [ ChainStressed no BlueDebt no OrangeDebt ] -> [  ] sfx7 
+
+
+late [TicM4][ ChainStressed ChainStressedA2 ] -> [TicM4][ ChainStressed ]
+late [TicM4][ ChainStressed ChainStressedA1 ] -> [TicM4][ ChainStressed ChainStressedA2 ]
+late [TicM4][ ChainStressed no ChainStressedA1 no ChainStressedA2 ] -> [TicM4][ ChainStressed ChainStressedA1 ]
+late [ no ChainStressed ChainStressedA2  ] -> []
+late [ no ChainStressed ChainStressedA1  ] -> []
 
 
 ==============
@@ -991,98 +1454,145 @@ level_select_point (04)
 message A reversal hex
 
 
-#############
-#.d..#..#...#
-#.v..#..#..##
-#.v..j..k.###
-#pv@.j..k.e##
-#.v..j..k.###
-#.v..#..#..##
-#.u..#..#...#
-#############
+##############
+#.d..#...#...#
+#.v..#...#..##
+#.v..j...k.###
+#pv@.j...k.e##
+#.v..j...k.###
+#.v..#...#..##
+#.u..#...#...#
+##############
 
 level_select_point (05)
 
 message The hex is unreasonable.
 
-###############
-#...###########
-#..@#....#....#
-#.....p..#....#
-#.rhhhhhlk....#
-#..@.....#....#
-#..#.....##e###
-###############
+########e#######
+#######...######
+#...#.##.####..#
+#..$#..#a##c4..#
+#..##.p....|...#
+#......####|...#
+#..$.######|####
+#.#....####n4###
+################
 
 
 
 
 level_select_point (06)
 
-message Who can undo the  wall's hex?
+message The hex will destroy what progress you make.
 
 
 ###############
 ##...#@#...#..#
-##.....#.p.k..#
+##.....#.p....#
 #rhhwhhl...#q.#
 ##.##......#..#
 ##.######..####
-##.#$...j..a.e#
+##.#$...j..ake#
 ###############
+
 
 level_select_point (07)
 
-message The hex won't let go.
 
-#################
-####.k.......####
-#....#.......e###
-####j######..####
-####......#######
-#...............#
-#.rhhhhhwwhhhl..#
-#.##@....#......#
-#.##.##..#...p..#
-#.##.....#......#
-#........#......#
-#################
+message The hex is more powerful than you.
+
+###############
+##.#########..#
+#.@@########..#
+##..###....#..#
+#shhwwwhhl.#..#
+#.....####.#..#
+#..##.#....k..e
+#p.##.##/l##..#
+#..#...#v#.#..#
+##shhl.#\l.#..#
+##.#####...#..#
+#..........#..#
+#...###########
+###############
+
+
 
 level_select_point (08)
 
 message Conflicting goals.
 
-#################
-####....#########
-####..#.#########
-####..$.@.$.@...#
-####....2...d...#
-######..|#..v...#
-######..|###v...#
-##.#.#..|###v...#
-#e.a.k..|###vp..#
-##.#.#..|###v...#
-######..8...u...#
-#################
+##############
+#.@.$.@...p..#
+#.2...d......#
+#.i###v###k###
+#.|###v#..a..#
+#.|###v#.....#
+#.|###v##...##
+#.|###v###.###
+#.8...u###e###
+##############
 
 
 level_select_point (09)
 
+message The hex won't let go.
+
+#################
+####j########.###
+###j.........k.e#
+####j############
+#...............#
+#rhhhhhhwwhhhhhl#
+#.##@....#..#####
+#.##.##.p#....###
+#.##.....#....###
+#........#....###
+#################
+
+
+
+level_select_point (10)
+
 message Cooperate to leave this place? But you are alone.
 
-##################
-#...####.d....q.$#
-#...####.v....####
-#...e###.v.......#
-#...####.v.p.....#
-#...####.v.......#
-##a#####.v....#b##
-##.###.#.u....#..#
-##..k..j...@..b..#
-########......#..#
-##################
+##############
+#.###d......##
+#..##v6----4##
+#..e#v......##
+#..##u......##
+#.###....$..##
+#a#.#.......##
+#k..j..p@...##
+##############
 
-Message You are out
+
+level_select_point (10)
+
+message This is the tenth seal.
+
+
+###############
+###...........#
+###.6--------4#
+#swhl......@..#
+#####.#a#.....#
+#####.#.#.....#
+#####.#e#...p.#
+#/wwh~#####j###
+#v##$.....#..##
+#\wwwwhlk....##
+###############
+
+
+
+Message You leave the dungeon.
+Message You wake up.
+Message You are in the dungeon again.
+Message Your fates are forever bound.
+
+(Sorry about the downer ending)
+
 (
 
 
