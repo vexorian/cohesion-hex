@@ -1,4 +1,4 @@
-title Cohesion Hex 3.77
+title Cohesion Hex 5.80
 (Note always before sharing set SOUND_VOL to 0.05 in the HTML)
 ( Requires Pancelor's fork : https://pancelor.com/PuzzleScript/editor.html)
 
@@ -7,7 +7,7 @@ author vexorian
 homepage vexorian.com
 
 
-
+again_interval 0.0
 
 
 background_color #000000
@@ -1402,6 +1402,8 @@ late [ no ChainStressed ChainStressedA2  ] -> []
 late [ no ChainStressed ChainStressedA1  ] -> []
 
 
+[ PlayerStuck ] -> again
+
 ==============
 WINCONDITIONS
 ==============
@@ -1474,13 +1476,13 @@ message A reversal hex
 
 
 ##############
-#.d..#...#...#
-#.v..#...#..##
-#.v..j...k.###
-#pv@.j...k.e##
-#.v..j...k.###
-#.v..#...#..##
-#.u..#...#...#
+#./hl.########
+#.v...########
+#.v..##..#####
+#pv@.j...k..e#
+#.v..##..#####
+#.v...########
+#.\hl.########
 ##############
 
 level_select_point (05)
