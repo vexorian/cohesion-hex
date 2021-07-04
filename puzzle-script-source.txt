@@ -1,4 +1,4 @@
-title Cohesion Hex 5.80
+title Cohesion Hex 5.81
 (Note always before sharing set SOUND_VOL to 0.05 in the HTML)
 ( Requires Pancelor's fork : https://pancelor.com/PuzzleScript/editor.html)
 
@@ -1119,7 +1119,7 @@ down  [ StuckSkullD Skull | Block ] -> [ Skull | up    Block]
 (Push: at this point so that it undoes the pressure)
 [ > Player | Block no Skull ] -> [ > Player | > Block ] sfx1
 startloop
-	[ > Skull | stationary Block ] -> [ > Skull | > Block ]
+    [ > Skull | stationary Block ] -> [ > Skull | > Block ]
 endloop
 
 ( contradiction )
@@ -1414,15 +1414,6 @@ WINCONDITIONS
 LEVELS
 =======
 
-###########e##
-##........#.##
-##...p....#.##
-##.....2..#k##
-##.#...|....@#
-rwhl...|.....#
-##.#...8.....#
-##...........#
-##############
 
 message A game by Vexorian
 
@@ -1692,3 +1683,4 @@ Message Your fates are forever bound.
 #................#
 ##################
 )
+
